@@ -1,0 +1,50 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block contenido %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.slider').bxSlider({
+            mode: 'fade',//horizontal, vertical, fade
+            auto: true,
+            pause: 2000
+        });
+    });
+</script>
+
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+{% endblock %}
+
+{% load humanize %}
+<br><br>
+<h2>Administrador Turismo Real </h2>
+
+<img src="{% static 'app/img/portada.png' %}" class="img-fluid" alt="Responsive image">
+
+
+<!--<div class="productos">
+    {% for p in departamentos %}
+    <div class="producto">
+
+    <div class="contenedor_producto">
+        {% if p.foto %}
+        <img src="{{ p.foto.url }}" alt="imagen producto">
+        {% endif %}
+        <div class="detalle">
+            <h5>{{ p.descripcion | capfirst }}</h5>
+            <h2>${{ p.tarifa | intcomma }}</h2>
+        </div>
+
+    </div>
+    <br><br><br>
+</div>
+
+{% endfor %}-->
+
+{% endblock %}

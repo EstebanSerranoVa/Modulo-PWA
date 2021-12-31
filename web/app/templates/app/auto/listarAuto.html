@@ -1,0 +1,65 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+<script>
+    function eliminar(id_vehiculo) {
+        Swal.fire({
+            "title": "Estas Seguro",
+            "text": "Esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, Cancelar",
+            "confirmButtonText": "Si, Eliminar",
+            "reverseButtons": true
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminarVehiculo/" + id_vehiculo + "/"
+                }
+            })
+    }
+</script>
+{% endblock %}
+
+
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+<br>
+
+<h2>Listado Auto</h2>
+<hr>
+<a href="{% url 'agregarVehiculo' %}" class="btn btn-success btn-sm">Agregar Vehiculo</a>
+<table class="table table-striped table-hover table-responsive-sm">
+    <tr>
+        <th>Patente</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+
+    </tr>
+
+    {% for p in entity %}
+    <tr>
+        <td>{{ p.patente }}</td>
+        <td>{{ p.marca }}</td>
+        <td>{{ p.modelo }}</td>
+        <td>{{ p.anio }}</td>
+        <td>
+            <div>
+                <a href="{% url 'modificarVehiculo' p.id_vehiculo %}" class="btn btn-info btn-sm">Modificar</a>
+                <a href="#" onclick="eliminar({{ p.id_vehiculo }})" class="btn btn-danger btn-sm">Eliminar</a>
+            </div>
+
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+<div>
+    {% include 'app/paginator.html' %}
+</div>
+
+{% endblock %}

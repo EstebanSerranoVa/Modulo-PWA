@@ -1,0 +1,65 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+<script>
+    function eliminar(id_mantencion) {
+        Swal.fire({
+            "title": "Estas Seguro",
+            "text": "Esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, Cancelar",
+            "confirmButtonText": "Si, Eliminar",
+            "reverseButtons": true
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminarMant/" + id_mantencion + "/"
+                }
+            })
+    }
+</script>
+{% endblock %}
+
+
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+<br>
+
+<h2>Listado Mantención</h2>
+<hr>
+<a href="{% url 'agregarMant' %}" class="btn btn-success btn-sm">Agregar Mantención</a>
+<table class="table table-striped table-hover table-responsive-sm">
+    <tr>
+        <th>Fecha</th>
+        <th>Id tipo Mantencion</th>
+        <th>Costo</th>
+
+    </tr>
+
+    {% for p in entity %}
+    <tr>
+        <td>{{ p.fecha }}</td>
+        <td>{{ p.id_tipomantencion }}</td>
+        <td>{{ p.costo }}</td>
+
+        <td>
+            <a href="{% url 'modificarMant' p.id_mantencion %}" class="btn btn-info btn-sm">Modificar</a>
+            <a href="#" onclick="eliminar({{ p.id_mantencion }})" class="btn btn-danger btn-sm">Eliminar</a>
+
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+<div>
+    {% include 'app/paginator.html' %}
+</div>
+</div>
+
+
+
+{% endblock %}

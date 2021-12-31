@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+
+{% block js %}
+<script>
+    function eliminar(id_cliente) {
+        Swal.fire({
+            "title": "Estas Seguro",
+            "text": "Esta acción no se puede deshacer",
+            "icon": "question",
+            "showCancelButton": true,
+            "cancelButtonText": "No, Cancelar",
+            "confirmButtonText": "Si, Eliminar",
+            "reverseButtons": true
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/eliminarCli/" + id_cliente + "/"
+                }
+            })
+    }
+</script>
+{% endblock %}
+
+
+{% block contenido %}
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+<br>
+
+<h2>Listado Clientes</h2>
+<hr>
+<a href="{% url 'agregarCli' %}" class="btn btn-success btn-sm">Agregar Cliente</a>
+<table class="table table-striped table-hover table-responsive-sm">
+    <tr>
+        <th>Id cliente</th>
+        <th>Id cuenta</th>
+
+    </tr>
+
+    {% for p in entity %}
+    <tr>
+        <td>{{ p.id_cliente }}</td>
+        <td>{{ p.id_cuenta }}</td>
+        <td>
+            <div>
+                <a href="{% url 'modificarCli' p.id_cliente %}" class="btn btn-info btn-sm">Modificar</a>
+                <a href="#" onclick="eliminar({{ p.id_cliente }})" class="btn btn-danger btn-sm">Eliminar</a>
+            </div>
+
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+<div>
+    {% include 'app/paginator.html' %}
+</div>
+
+{% endblock %}
